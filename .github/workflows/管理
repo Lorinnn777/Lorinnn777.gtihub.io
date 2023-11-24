@@ -30,8 +30,8 @@
         input{
             text-align: center;
             border:none; 
-            background-color: rgba(249, 249, 55, 0.534);
-            border-bottom:1px solid rgb(235, 235, 59);
+            background-color: rgba( 249, 249, 55, 0.5);
+            border-bottom:1px solid rgb( 235, 235, 59);
             width: 260px;
         }
         
