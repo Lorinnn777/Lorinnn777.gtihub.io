@@ -6,12 +6,15 @@
     <meta http-equiv = "refresh", content = "1, url = '注册.html' "> 
     <title>Loading-----</title>
 </head>
-<body>
+<body onload="sendTrue()">
     <h3>Loading-----</h3>
+    
     <script>
-        function jump(){
-
-
+        
+            const socket = new WebSocket('ws://172.25.216.146');
+            function sendTrue() {
+            socket.send("true");
+        
 
         }
     </script>
