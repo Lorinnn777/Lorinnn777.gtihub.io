@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon"  type="images/x-icon"  href="电通.jpg">
-    <title>钥匙归还系统</title>
+    <title>钥匙管理系统</title>
     <style>
         html{
             height: 100%;
@@ -14,7 +14,7 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
-            background: url(背景3.jpg) no-repeat 0px 0px;
+            background: url(背景1.jpg) no-repeat 0px 0px;
             background-repeat: no-repeat;
             background-size: 100% 100%;
             -moz-background-size: 100% 100%;
@@ -27,40 +27,46 @@
             
         }
     
-       
+        #loginDiv {
+            width: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            background-color: rgba(246, 250, 250, 0.6);
+            box-shadow: 7px 7px 17px rgba(246, 250, 250, 0.4);
+            border-radius: 300px;
+        }
+         
+        #loginDiv:hover{  
+           filter: grayscale(60%);
+        }
+
+
         input{
             text-align: center;
             border:none; 
-            background-color: rgba(189, 191, 189, 0.055);
-            border-bottom:1px solid rgb(162, 162, 162);
+            background-color: rgba(249, 249, 55, 0.055);
+            border-bottom:1px solid rgb(235, 235, 59);
             width: 260px;
         }
         
         p{
             text-align: center;
-            color: rgb(174, 174, 174)
+            color: rgb(23, 120, 23)
         }
                   
     </style>
 </head>
 
 <body>
-
-    <div id="loginDiv">
-            
-        <form action="" id="form">
-                <table>
-                    <h2 style="text-align: center; color: rgb(59, 248, 65);">归还钥匙</h2></br>
-                    
-               </table>
-            </br>
-        
-
         <script>
             emailjs.init("CkjLfgvu9rt5nmYni");
         </script>
 
+
 <form id="userForm">
+    <button type="button" onclick="jump2()">我要还钥匙</button>
     <label for="user">User:</label>
     <input type="text" id="user" name="user" required><br>
 
@@ -70,13 +76,25 @@
     <label for="phnum">Phone Number:</label>
     <input type="tel" id="phnum" name="phnum" required><br>
 
+    
     <button type="button" onclick="sendEmail()">Submit</button>
 </form>
+            <script>    
+            function jump2(){
+                window.location.href="归还网页.html";
+
+            }
+            
+            </script>
 
 
         <script>
+            
+            const socket = new WebSocket('ws://172.25.216.146');
+            
             email.onchange = function(){
-		    var email = this.value;
+		    
+            var email = this.value;
 		    var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
 		    if(!reg.test(email)){
 		    	alert("邮箱格式不正确，请重新输入！");
@@ -102,6 +120,8 @@
 		    }
 	        }
             
+            
+
             function sendEmail() {
             const user = document.getElementById('user').value;
             const email = document.getElementById('email').value;
@@ -134,14 +154,14 @@
                     return false;            
                 }  
                 else{
-                   alert("信息填写已完成，归还成功！");
+                   alert("信息填写已完成，即将开门！");
                 
                 
                 const user = document.getElementById('user').value;
                 const email = document.getElementById('email').value;
                 const phnum = document.getElementById('phnum').value;
                 
-                emailjs.send("service_lorin", "template_7wjieon", {
+                emailjs.send("service_lorin", "template_3k3oc4j", {
                 email: email,
                 user: user,
                 phnum: phnum,
@@ -152,17 +172,19 @@
             .catch((error) => {
                 console.error('Error sending email:', error);
             });
-            
-            <!--给server反馈-->
-            
-
-        }
-
-       
-    }
 
 
+                <!--给server反馈-->
+                
+                socket.send("true");
 
-</script>
+                }
+
+               
+            }
+        
+
+
+        </script>
 </body>
 </html>
